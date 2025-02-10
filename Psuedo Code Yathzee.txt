@@ -1,0 +1,98 @@
+Importeer functies en data uit Yathzee en YathzeeData
+
+Functie invullen_upper_section(getal, naam, index, worp, yathzeebord, categorie_gevuld):
+    Als getal in worp aanwezig is EN categorie nog niet gevuld is EN score op -1 staat:
+        Vraag speler of hij deze categorie wil invullen
+        Als antwoord "ja" is:
+            Bereken score als (aantal keer getal in worp) * getal
+            Vul score in op het scorebord
+            Print de ingevulde score
+            Retourneer True (categorie is ingevuld)
+    Retourneer originele categorie_gevuld-status
+
+
+
+Genereer een nieuwe worp (5 dobbelstenen)
+Toon huidige scorebord
+Print de eerste worp
+
+VOOR beurt VAN 1 TOT 3:
+    Toon de worp met indexnummers
+    Vraag de speler welke dobbelstenen hij wil herrollen (1 t/m 5)
+    
+    Als invoer leeg is:
+        Stop herrollen
+
+    Probeer de invoer om te zetten naar een lijst van indices
+    Herrol de geselecteerde dobbelstenen
+    Toon de bijgewerkte worp
+
+    Als invoer ongeldig is:
+        Toon foutmelding en vraag opnieuw
+
+categorie_gevuld = False
+
+VOOR elk (getal, naam, index) in [(1, "Aces", 0), (2, "Twos", 1), ..., (6, "Sixes", 5)]:
+    categorie_gevuld = invullen_upper_section(getal, naam, index, worp, yathzeebord, categorie_gevuld)
+
+ALS Full House nog niet is ingevuld EN categorie nog niet gevuld is EN worp voldoet aan Full House:
+    Vraag speler of hij Full House wil invullen
+    Als "ja":
+        Vul Full House in met 25 punten
+        Markeer categorie als gevuld
+
+ALS Small Straight nog niet is ingevuld EN categorie nog niet gevuld is EN worp voldoet aan Small Straight:
+    Vraag speler of hij Small Straight wil invullen
+    Als "ja":
+        Vul Small Straight in met 30 punten
+        Markeer categorie als gevuld
+
+ALS Large Straight nog niet is ingevuld EN categorie nog niet gevuld is EN worp voldoet aan Large Straight:
+    Vraag speler of hij Large Straight wil invullen
+    Als "ja":
+        Vul Large Straight in met 40 punten
+        Markeer categorie als gevuld
+
+ALS Yahtzee nog niet is ingevuld EN categorie nog niet gevuld is EN worp voldoet aan Yahtzee:
+    Vraag speler of hij Yahtzee wil invullen
+    Als "ja":
+        Vul Yahtzee in met 50 punten
+        Markeer categorie als gevuld
+
+ALS Four of a Kind nog niet is ingevuld EN categorie nog niet gevuld is EN worp voldoet aan Four of a Kind:
+    Vraag speler of hij Four of a Kind wil invullen
+    Als "ja":
+        Vul Four of a Kind in met de som van de worp
+        Markeer categorie als gevuld
+
+ALS Three of a Kind nog niet is ingevuld EN categorie nog niet gevuld is EN worp voldoet aan Three of a Kind:
+    Vraag speler of hij Three of a Kind wil invullen
+    Als "ja":
+        Vul Three of a Kind in met de som van de worp
+        Markeer categorie als gevuld
+
+ALS categorie_gevuld == False EN Chance nog niet is ingevuld:
+    Vraag speler of hij Chance wil invullen
+    Als "ja":
+        Vul Chance in met de som van de worp
+        Markeer categorie als gevuld
+
+ALS categorie_gevuld == False:
+    Zoek de eerste lege categorie op het scorebord
+    Zet de waarde op 0
+    Print dat een categorie automatisch op 0 is gezet
+
+
+ALS alle categorieën zijn ingevuld:
+    Toon het eindscorebord
+    Bereken de totaalscore:
+
+    PuntenHelft1 = som van Aces t/m Sixes
+    ALS PuntenHelft1 >= 63:
+        bonus = 35
+
+    PuntenHelft2 = som van Full House, Small Straight, Large Straight, Yahtzee, Four of a Kind, Three of a Kind, en Chance
+
+    Eindscore = PuntenHelft1 + bonus + PuntenHelft2
+    Print de eindscore
+    stop

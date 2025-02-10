@@ -1,6 +1,4 @@
 import random
-
-
 nummers = (1,2,3,4,5,6)
 
 def numbergen():
@@ -16,9 +14,8 @@ def fivenumbergen():
 
 
 def herdobbelen(worp, te_vervangen_indexes):
-    gecorrigeerde_indexes = [index - 1 for index in te_vervangen_indexes]
-    for index in gecorrigeerde_indexes:
-        worp[index] = random.randint(1, 6)
+    for index in te_vervangen_indexes:
+        worp[index] = random.randint(1, 6) 
     return worp
 
 def check_full_house(Worp):
@@ -44,5 +41,3 @@ def check_three_of_a_kind(Worp):
 
 def alle_waarden_ingevuld(bord):
     return all(list(categorie.values())[0] != -1 for categorie in bord)
-
-

@@ -1,97 +1,118 @@
-from Yathzee import *
-from YathzeeData import *
-WoprBeurten = 2
+from YathzeeData2 import *
+from YathzeeFunctions import *
 
-def invullen_upper_section(getal, naam, index, worp, yathzeebord, categorie_gevuld):
-    
-    if getal in worp and not categorie_gevuld and yathzeebord[index][naam] == -1:
-        if input(f"Wil je de {naam} invullen? (ja/nee): ") == "ja":
-            yathzeebord[index][naam] = worp.count(getal) * getal
-            print(f"{naam} ingevuld:", yathzeebord[index][naam])
-            return True 
-    return categorie_gevuld
 
 while True:
     Worp = fivenumbergen()
-    print("Huidige Scorebord", Yathzeebord) 
     print("Eerste worp:", Worp)
 
-    while WoprBeurten > 0:
-        print(WoprBeurten)
-        
+    for beurt in range(3):
         
         print("Huidige worp genummerd:")
-    
-        for i , waarde in enumerate(Worp, 1):
+        for i, waarde in enumerate(Worp):
             print(f"Index {i}: {waarde}")
 
-        te_vervangen = input("Geef aan welke Dobbelsteen 1 tot 5 (gescheiden door spaties) je wilt herdobbelen, of druk op Enter om te stoppen: ")
+        te_vervangen = input("Geef aan welke Dobbelsteen 0 tot 4 (gescheiden door spaties) je wilt herdobbelen, of druk op Enter om te stoppen: ")
 
         if not te_vervangen.strip():
-            break   
+            break  
 
         try:
             te_vervangen_indexes = [int(i) for i in te_vervangen.split()]
             Worp = herdobbelen(Worp, te_vervangen_indexes)
             print("Bijgewerkte worp:", Worp)
-            WoprBeurten -=1
             
         except ValueError:
             print("Ongeldige invoer. Probeer opnieuw.")
-            print(WoprBeurten)
 
 
     categorie_gevuld = False
 
-    for getal, naam, index in [(1, "Aces", 0), (2, "Twos", 1), (3, "Threes", 2), 
-                                (4, "Fours", 3), (5, "Fives", 4), (6, "Sixes", 5)]:
-        categorie_gevuld = invullen_upper_section(getal, naam, index, Worp, Yathzeebord, categorie_gevuld)
+    if 1 in Worp and Aces_value == -1:
+        if input("Wil je de Aces invullen? (ja/nee): ") == "ja":
+            Aces_value = Worp.count(1)
+            print("Aces ingevuld:", Aces_value)
+            categorie_gevuld = True
+            Yathzeebord[0]["Aces"] = Aces_value
 
+    elif 2 in Worp and Twos_value == -1:
+        if input("Wil je de Twos invullen? (ja/nee): ") == "ja":
+            Twos_value = Worp.count(2) * 2
+            print("Twos ingevuld:", Twos_value)
+            categorie_gevuld = True
+            Yathzeebord[1]["Twos"] = Twos_value
 
+    elif 3 in Worp and Threes_value == -1:
+        if input("Wil je de Threes invullen? (ja/nee): ") == "ja":
+            Threes_value = Worp.count(3) * 3
+            print("Threes ingevuld:", Threes_value)
+            categorie_gevuld = True
+            Yathzeebord[2]["Threes"] = Threes_value
 
-    if FullHouse_value == -1 and categorie_gevuld == False and check_full_house(Worp):
+    elif 4 in Worp and Fours_value == -1:
+        if input("Wil je de Fours invullen? (ja/nee): ") == "ja":
+            Fours_value = Worp.count(4) * 4
+            print("Fours ingevuld:", Fours_value)
+            categorie_gevuld = True
+            Yathzeebord[3]["Fours"] = Fours_value
+
+    elif 5 in Worp and Fives_value == -1:
+        if input("Wil je de Fives invullen? (ja/nee): ") == "ja":
+            Fives_value = Worp.count(5) * 5
+            print("Fives ingevuld:", Fives_value)
+            categorie_gevuld = True
+            Yathzeebord[4]["Fives"] = Fives_value
+
+    elif 6 in Worp and Sixes_value == -1:
+        if input("Wil je de Sixes invullen? (ja/nee): ") == "ja":
+            Sixes_value = Worp.count(6) * 6
+            print("Sixes ingevuld:", Sixes_value)
+            categorie_gevuld = True
+            Yathzeebord[5]["Sixes"] = Sixes_value
+
+    elif FullHouse_value == -1 and check_full_house(Worp):
         if input("Wil je de Full House invullen? (ja/nee): ") == "ja":
             FullHouse_value = 25
             print("Full House ingevuld:", FullHouse_value)
             categorie_gevuld = True
             Yathzeebord[6]["Full House"] = FullHouse_value
 
-    if SmallStraight_value == -1 and categorie_gevuld == False and check_small_straight(Worp):
+    elif SmallStraight_value == -1 and check_small_straight(Worp):
         if input("Wil je de Kleine Straat invullen? (ja/nee): ") == "ja":
             SmallStraight_value = 30
             print("Kleine Straat ingevuld:", SmallStraight_value)
             categorie_gevuld = True
             Yathzeebord[7]["Small Straight"] = SmallStraight_value
 
-    if LargeStraight_value == -1 and categorie_gevuld == False and check_large_straight(Worp):
+    elif LargeStraight_value == -1 and check_large_straight(Worp):
         if input("Wil je de Grote Straat invullen? (ja/nee): ") == "ja":
             LargeStraight_value = 40
             print("Grote Straat ingevuld:", LargeStraight_value)
             categorie_gevuld = True
             Yathzeebord[8]["Large Straight"] = LargeStraight_value
 
-    if Yahtzee_value == -1 and categorie_gevuld == False and check_yahtzee(Worp):
+    elif Yahtzee_value == -1 and check_yahtzee(Worp):
         if input("Wil je de Yahtzee invullen? (ja/nee): ") == "ja":
             Yahtzee_value = 50
             print("Yahtzee ingevuld:", Yahtzee_value)
             categorie_gevuld = True
             Yathzeebord[9]["Yahtzee"] = Yahtzee_value
 
-    if FourOfAKind_value == -1 and categorie_gevuld == False and check_four_of_a_kind(Worp):
+    elif FourOfAKind_value == -1 and check_four_of_a_kind(Worp):
         if input("Wil je de Four of a Kind invullen? (ja/nee): ") == "ja":
             FourOfAKind_value = sum(Worp)
             print("Four of a Kind ingevuld:", FourOfAKind_value)
             categorie_gevuld = True
             Yathzeebord[10]["Four of a Kind"] = FourOfAKind_value
 
-    if ThreeOfAKind_value == -1 and categorie_gevuld == False and check_three_of_a_kind(Worp):
+    elif ThreeOfAKind_value == -1 and check_three_of_a_kind(Worp):
         if input("Wil je de Three of a Kind invullen? (ja/nee): ") == "ja":
             ThreeOfAKind_value = sum(Worp)
             print("Three of a Kind ingevuld:", ThreeOfAKind_value)
             categorie_gevuld = True
             Yathzeebord[11]["Three of a Kind"] = ThreeOfAKind_value
 
-    if  categorie_gevuld == False and Chance_value == -1 :
+    elif Chance_value == -1:
         if input("Wil je de Chance invullen? (ja/nee): ") == "ja":
             Chance_value = sum(Worp)
             print("Chance ingevuld:", Chance_value)
@@ -109,13 +130,6 @@ while True:
     
     if alle_waarden_ingevuld(Yathzeebord):
         print("Eindscorebord:", Yathzeebord)
-        bonus = 0
-        PuntenHelft1 = Yathzeebord[0]["Aces"] + Yathzeebord[1]["Twos"] + Yathzeebord[2]["Threes"] + Yathzeebord[3]["Fours"] + Yathzeebord[4]["Fives"] + Yathzeebord[5]["Sixes"]
-        PuntenHelft2 = Yathzeebord[6]["Full House"] + Yathzeebord[7]["Small Straight"] + Yathzeebord[8]["Large Straight"] + Yathzeebord[9]["Yahtzee"] + Yathzeebord[10]["Four of a Kind"] + Yathzeebord[11]["Three of a Kind"] + Yathzeebord[12]["Chance"]
-
-        if PuntenHelft1 >= 63:
-            bonus = 35
-        Punten = PuntenHelft1 + bonus + PuntenHelft2 
-
         break
-        
+
+    
